@@ -1,77 +1,3 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
-
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
-
-const render = require("./lib/htmlRenderer");
-
-function init() {
-    function createManager() {
-        inquirer.prompt([
-            {
-    type: "input",
-    name: "managerName"
-    message: ""
-            }
-            {
-    type: "input",
-    name: "managerId"
-    message: ""
-            }
-            {
-    type: "input",
-    name: "manager"
-    message: ""
-            }
-            {
-    type: "input",
-    name: "manager"
-    message: ""
-            }
-        ]).then(res) => {
-            switch(res.memberChoice) {
-                case: "Engineer"
-                createEngineer();
-                case: "Intern"
-                createIntern();
-                default: 
-                createTeam();
-                break;
-            }
-            const team = [];
-            const teamMember = res.memberChoice;
-            team.push(teamMember);
-        }
-    }
-    
-    function createEngineer() {
-    
-    }
-    
-    function createIntern() {
-    
-    }
-    
-    function createTeam() {
-    
-    }
-
-     
-    function buildTeam() {
-        fs.writeFileSync("main.html", , (err) => {
-            if (err) throw err;
-
-        });
-    }
-}
-
-createManager();
-init();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -94,3 +20,93 @@ init();
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const inquirer = require("inquirer");
+const path = require("path");
+const fs = require("fs");
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const render = require("./lib/htmlRenderer");
+
+const employees = []
+
+const questions = [
+    {
+        type: 'list',
+        message: 'What type of employee are you?',
+        choices: ['Manager', 'Intern', 'Engineer']
+        name: 'role'
+    }
+    {
+        message: 'What id your name?',
+        name: 'name'
+    }
+    {
+        message: 'What is your employee ID?',
+        name: 'id'
+    }
+    {
+        message: 'What is your email?',
+        name: 'email'
+    }
+]
+
+const init = async () => {
+    const { newEmployee } = await inquirer.prompt({
+        type: 'confirm',
+        message: 'Would you like to add this team member?'
+        name: 'newEmployee'
+    })
+
+    if (newEmployee) {
+        initEmployee();
+    } else {
+        if (employees.length > 0) {
+            if (fs.existsSync(OUTPUT_DIR)) {
+                return fs.writeFileSync(outputPath, render(employees), )
+            } else {
+                return fs.mkdir(OUTPUT_DIR, err => {
+                    if(err) throw err;
+    
+                    return fs.writeFileSync(outputPath, render(employees))
+                })
+            }
+        }
+    }
+}
+
+const initEmployee = async () => {
+    const { role, name, id, email } = await inquirer, prompt(questions);
+
+    switch (role) {
+        case 'Manager':
+            const { officeNumber } = await inquirer.prompt({
+                message: 'Office Number?',
+                name: 'officeNumber'
+            })
+            employees.push(new Manager(name, id, email, officeNumber))
+            break;
+        case 'Intern':
+            const { school } = awaitinquirer.prompt({
+                message: 'School?',
+                name: 'school'
+            })
+            employees.push(new Intern(name, id, email, school))
+            break;
+        case 'Engineer':
+            const { github } = awaitinquirer.prompt({
+                message: 'GitHub?',
+                name: 'github'
+            })
+            employees.push(new Engineer(name, id, email, github))
+            break;
+        default:
+            console.log("No Default")
+    }
+    init();
+}
