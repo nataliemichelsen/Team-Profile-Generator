@@ -14,13 +14,27 @@ function init() {
     function createManager() {
         inquirer.prompt([
             {
-    type: "list",
-    name: "memberChoice"
-    message: "What is the role"
-    choices: ""
+    type: "input",
+    name: "managerName"
+    message: ""
+            }
+            {
+    type: "input",
+    name: "managerId"
+    message: ""
+            }
+            {
+    type: "input",
+    name: "manager"
+    message: ""
+            }
+            {
+    type: "input",
+    name: "manager"
+    message: ""
             }
         ]).then(res) => {
-            switch(memberChoice) {
+            switch(res.memberChoice) {
                 case: "Engineer"
                 createEngineer();
                 case: "Intern"
@@ -29,6 +43,9 @@ function init() {
                 createTeam();
                 break;
             }
+            const team = [];
+            const teamMember = res.memberChoice;
+            team.push(teamMember);
         }
     }
     
@@ -46,12 +63,14 @@ function init() {
 
      
     function buildTeam() {
-        fs.writeToFile
+        fs.writeFileSync("main.html", , (err) => {
+            if (err) throw err;
+
+        });
     }
-    
-    createManager();
 }
 
+createManager();
 init();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
