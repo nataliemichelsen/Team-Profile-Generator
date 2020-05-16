@@ -14,4 +14,5 @@
 
 ## **Video of Deployed Application**
 
-![Deployed Application](/Team-Profile-Generator_Screencastify)
+![Deployed Application](/Team-Profile-Generator_Screencastify.webm)
+![Team Test](/teamTest.png)
